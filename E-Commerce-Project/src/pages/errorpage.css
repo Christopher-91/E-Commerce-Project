@@ -1,0 +1,47 @@
+/* 1. The Wrapper: Forces a white background and centers everything */
+.error-page-wrapper {
+  background-color: #ffffff; /* Explicitly overrides any global grey */
+  min-height: 100vh; /* Takes up the full height of the screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* 2. The Typography */
+.error-title {
+  font-size: 100px;
+  color: #e53935; /* A clean, standard error red */
+  margin: 0;
+}
+
+.error-subtitle {
+  font-size: 28px;
+  color: #222222;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.error-text {
+  color: #555555;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+/* 3. The E-commerce Style Button */
+.error-home-button {
+  background-color: #ffd814; /* Standard e-commerce yellow */
+  color: #000000;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.error-home-button:hover {
+  background-color: #f7ca00; /* Darkens slightly when the user hovers */
+}
