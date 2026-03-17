@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router';
+import { NavLink } from 'react-router';
 import './Header.css';
 import LogoWhite from '../assets/images/logo-white.png';
 import MobileLogoWhite from '../assets/images/mobile-logo-white.png';
