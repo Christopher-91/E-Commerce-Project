@@ -5,7 +5,7 @@ import MobileLogoWhite from '../assets/images/mobile-logo-white.png';
 import SearchIcon from '../assets/images/search-icon.png';
 import CartIcon from '../assets/images/cart-icon.png';
 
-export function Header({ cart }) {
+export function Header({ cart = [] }) {
   let totalQuantity = 0;
 
   cart.forEach((cartItem) => {
@@ -38,7 +38,7 @@ export function Header({ cart }) {
           <span className="orders-text">Orders</span>
         </NavLink>
 
-        <NavLink className="cart-link header-link" to="/">
+        <NavLink className="cart-link header-link" to="/checkout">
           <img className="cart-icon" src={CartIcon} />
           <div className="cart-quantity">{totalQuantity}</div>
           <div className="cart-text">Cart</div>

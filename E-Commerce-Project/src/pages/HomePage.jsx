@@ -6,6 +6,8 @@ import './HomePage.css';
 export function HomePage() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [selectedQuantities, setSelectedQuantities] = useState({});
+  const [addedProductIds, setAddedProductIds] = useState([]);
 
   useEffect(() => {
     axios.get('/api/products')
@@ -18,6 +20,41 @@ export function HomePage() {
         setCart(response.data);
       });
   }, []);
+
+  const addToCart = (productId) => {
+    const quantity = selectedQuantities[productId] || 1;
+
+    axios.post('/api/cart-items', {
+      productId,
+      quantity
+    }).then((response) => {
+      setCart((previousCart) => {
+        const cartItemExists = previousCart.some((cartItem) => (
+          cartItem.productId === productId
+        ));
+
+        if (cartItemExists) {
+          return previousCart.map((cartItem) => (
+            cartItem.productId === productId ? response.data : cartItem
+          ));
+        }
+
+        return [...previousCart, response.data];
+      });
+
+      setAddedProductIds((previousProductIds) => (
+        previousProductIds.includes(productId)
+          ? previousProductIds
+          : [...previousProductIds, productId]
+      ));
+
+      setTimeout(() => {
+        setAddedProductIds((previousProductIds) => (
+          previousProductIds.filter((id) => id !== productId)
+        ));
+      }, 2000);
+    });
+  };
 
   return (  
     <>
@@ -54,7 +91,15 @@ export function HomePage() {
                 </div>
 
                 <div className="product-quantity-container">
-                  <select>
+                  <select
+                    value={selectedQuantities[product.id] || 1}
+                    onChange={(event) => {
+                      setSelectedQuantities({
+                        ...selectedQuantities,
+                        [product.id]: Number(event.target.value)
+                      });
+                    }}
+                  >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -70,12 +115,15 @@ export function HomePage() {
 
                 <div className="product-spacer"></div>
 
-                <div className="added-to-cart">
+                <div className={`added-to-cart ${addedProductIds.includes(product.id) ? 'visible' : ''}`}>
                   <img src="images/icons/checkmark.png" />
                   Added
                 </div>
 
-                <button className="add-to-cart-button button-primary">
+                <button
+                  className="add-to-cart-button button-primary"
+                  onClick={() => addToCart(product.id)}
+                >
                   Add to Cart
                 </button>
               </div>
